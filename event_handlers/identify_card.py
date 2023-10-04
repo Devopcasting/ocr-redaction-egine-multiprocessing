@@ -5,8 +5,13 @@ import pytesseract
 from watchdog.events import FileSystemEventHandler
 from helpers.process_text import CleanText
 from helpers.identify_pan_card import IdentifyPanCard
+from ocrr_logging.ocrr_engine_log import OCRREngineLogging
 
 class IdentifyCard(FileSystemEventHandler):
+    def __init__(self) -> None:
+        super().__init__()
+        # Configure logger
+        self.logger = OCRREngineLogging()
 
     def on_created(self, event):
         # Get image path
@@ -40,8 +45,10 @@ class IdentifyCard(FileSystemEventHandler):
         pan_card = IdentifyPanCard(clean_text)
         if pan_card.check_pan_card():
             if pan_card.identify_pan_card_pattern_1():
+                self.logger.info(f"Pan card {image_file_name} is of pattern 1")
                 shutil.move(image_path, os.path.join(pan_card_p1_path, image_file_name))
             else:
+                self.logger.info(f"Pan card {image_file_name} is of pattern 2")
                 shutil.move(image_path, os.path.join(pan_card_p2_path, image_file_name))
 
     

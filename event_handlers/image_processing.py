@@ -6,10 +6,11 @@ from ocrr_logging.ocrr_engine_log import OCRREngineLogging
 
 
 class ImageProcessingEnventHandler(FileSystemEventHandler):
+    def __init__(self) -> None:
+        super().__init__()
+        self.logger = OCRREngineLogging()    
+        
     def on_created(self, event):
-        # Configure logger
-        config = OCRREngineLogging()
-        logger = config.configure_logger()
         
         # Uploaded image path
         image_path = event.src_path
@@ -31,6 +32,6 @@ class ImageProcessingEnventHandler(FileSystemEventHandler):
         # Process the image
         process_image_obj = ProcessJPEGImages(image_path, processed_image_path)
         if process_image_obj.processed_image():
-            logger.info(f"Image {file_name} processed successfully")
+            self.logger.info(f"Image {file_name} processed successfully")
         else:
-            logger.error(f"Error Code : ERR001")
+            self.logger.error(f"Error Code : PANERR001")
