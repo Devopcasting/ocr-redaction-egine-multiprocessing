@@ -6,7 +6,7 @@ from helpers.text_coordinates import TextCoordinates
 class PanCardInfo:
     def __init__(self, image_path) -> None:
         self.image_path = image_path
-    
+
     # func: get the Bound box coordinates of each char of a string
     def bound_box_coords(self, text: str, indexcount: int) -> list:
         image = cv2.imread(self.image_path)
@@ -16,7 +16,7 @@ class PanCardInfo:
         result = []
         coords = []
 
-        # process image and bound boxes on each chars
+        # process image and bound boxes on each char
         boxes = pytesseract.image_to_boxes(self.image_path)
 
         for b in boxes.splitlines():
@@ -81,8 +81,9 @@ class PanCardInfo:
         # date pattern DD/MM/YYY
         date_pattern = r'\d{2}/\d{2}/\d{4}'
         coordinates = TextCoordinates(self.image_path).generate_text_coordinates()
-    
+
         dob_coords = []
+
         for i, (x1,y1,x2,y2,text) in enumerate(coordinates):
             match = re.search(date_pattern, coordinates[i][4])
             if match:
@@ -91,5 +92,5 @@ class PanCardInfo:
                 dob_coords.append(bound_box[0][1][1])
                 dob_coords.append(bound_box[5][1][2])
                 dob_coords.append(bound_box[5][1][3])
-                return dob_coords                
+                return dob_coords              
         return False
