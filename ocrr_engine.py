@@ -61,32 +61,34 @@ def monitor_pan_card_p2(monitor_pan_card_p2_path):
         observer.stop()
         observer.join()
 
-
 # func: main
-def main():
+def start_monitoring():
     # Create a process pool
     pool = multiprocessing.Pool()
 
-    monitor_upload_process = pool.apply_async(monitor_upload, args=(monitor_upload_path,))
-    monitor_processed_image_process = pool.apply_async(monitor_processed_image, args=(monitor_processed_image_path,))
-    monitor_pan_card_p1_process = pool.apply_async(monitor_pan_card_p1, args=(monitor_pan_card_p1_path,))
-    monitor_pan_card_p2_process = pool.apply_async(monitor_pan_card_p2, args=(monitor_pan_card_p2_path,))
+    with multiprocessing.Pool() as pool:
+        monitor_upload_process = pool.apply_async(monitor_upload, args=(monitor_upload_path,))
+        monitor_processed_image_process = pool.apply_async(monitor_processed_image, args=(monitor_processed_image_path,))
+        monitor_pan_card_p1_process = pool.apply_async(monitor_pan_card_p1, args=(monitor_pan_card_p1_path,))
+        monitor_pan_card_p2_process = pool.apply_async(monitor_pan_card_p2, args=(monitor_pan_card_p2_path,))
 
-    # Wait for all the process to finish
-    pool.close()
-    pool.join()
+        pool.close()
+        pool.join()
 
 if __name__ == '__main__':
 
     # Directory path to monitor upload folder
     monitor_upload_path = r'C:\Users\pokhriyal\Desktop\Project-OCRR\images\upload'
+
     # Directory path to monitor the processed image folder
     monitor_processed_image_path = r'C:\Users\pokhriyal\Desktop\Project-OCRR\images\processed_images'
+
     # Directory path to monitor pan card pattern 1
     monitor_pan_card_p1_path = r'C:\Users\pokhriyal\Desktop\Project-OCRR\images\pan_card\pattern1'
+
     # Directory path to monitor pan card pattern 2
     monitor_pan_card_p2_path = r'C:\Users\pokhriyal\Desktop\Project-OCRR\images\pan_card\pattern2'
 
-
     # Run main
-    main()
+    start_monitoring()
+  
