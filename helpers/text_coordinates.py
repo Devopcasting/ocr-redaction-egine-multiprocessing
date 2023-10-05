@@ -6,7 +6,7 @@ class TextCoordinates:
         self.image_path = image_path
     
     # func: generate coordinates
-    def generate_text_coordinates(self):
+    def generate_text_coordinates(self) -> list:
         data = pytesseract.image_to_data(self.image_path, output_type=pytesseract.Output.DICT)
 
         special_characters = r'[!@#$%^&*()_\-+{}\[\]:;<>,.?~\\|]'
