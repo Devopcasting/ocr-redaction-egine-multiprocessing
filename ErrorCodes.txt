@@ -1,9 +1,14 @@
 Error Codes for Images
 ======================
 ERR001 = Error while processing the image
+ERR002 = Image is not a Pan card or Aadhaar card
 
 Error Codes for Pan Card
 ========================
-PANERR001 = Pan card Rejected. All information was not available.
+PANERR001 = Pan card Rejected. All required information was not available.
 PANERR002 = Error while extracting the first 5 characters of Pan Card Number.
 PANERR003 = Error while extracting the first 6 characters of DOB from PAN Card
+
+Errot codes for Pan Card
+========================
+AADERR001 = Aadhaar card Rejected. All required information was not available
